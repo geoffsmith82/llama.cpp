@@ -1,9 +1,9 @@
-// Defines CLOCK_MONOTONIC on Linux
+﻿// Defines CLOCK_MONOTONIC on Linux
 #define _GNU_SOURCE
 
 #include "ggml.h"
 
-#if defined(_MSC_VER) || defined(__MINGW32__)
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__BORLANDC__)
 #include <malloc.h> // using malloc.h with MSC/MINGW
 #elif !defined(__FreeBSD__) && !defined(__NetBSD__) && !defined(__OpenBSD__)
 #include <alloca.h>
@@ -166,7 +166,7 @@ typedef double ggml_float;
 #undef bool
 #define bool _Bool
 #else
-#include <immintrin.h>
+//#include <immintrin.h>
 #endif
 #endif
 
@@ -338,7 +338,7 @@ ggml_fp16_t ggml_fp32_to_fp16(float x) {
 // timing
 //
 
-#if defined(_MSC_VER) || defined(__MINGW32__)
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(__BORLANDC__)
 static int64_t timer_freq;
 void ggml_time_init(void) {
     LARGE_INTEGER frequency;
